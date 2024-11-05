@@ -1,17 +1,19 @@
 # Jenkins Lab
 
-## Introduction
+## Overview
 
-A jenkins lab environment to test/learn about this application. 
+This repository provides a Jenkins lab environment designed for testing and learning purposes. It allows you to experiment with Jenkins, Docker-in-Docker (DinD), and Jenkins agents in a local setup. The setup utilizes Docker Compose to simplify the process.
 
 ## Architecture
 
-Run the docker compose file to build the environment, this will set to you on your docker the following components:
-- 1 Jenkins container, with a ssh-key pair to use
-- 1 Docker DinD(Docker in Docker), so you can have some fun with Jenkins' Docker plugin, using dymanic agents
-- 1 Jenkins Docker Agent(ssh-agent image), so you can try and create a manual agent to run your jobs
+Running the provided `docker-compose.yml` file will spin up the following components in your Docker environment:
 
-When done, this is what you will have running on your docker:
+- **Jenkins Server**: A Jenkins container set up with an SSH key pair, allowing secure connections.
+- **Docker-in-Docker (DinD)**: A DinD container with TLS deactivated (for testing purposes only), which enables Jenkins to manage dynamic agents using the Docker plugin.
+- **Jenkins Docker Agent**: A container based on the `ssh-agent` image, which you can configure as a manual Jenkins agent for running your jobs.
+
+Once the environment is up and running, it should resemble the following architecture:
+
 ![Architecture](./imgs/lab_architecture.png)
 
-> Important note: In this lab, you will have a DinD container with TLS deactivated, don't try this in production envs
+> **Note**: This setup deactivates TLS in the DinD container for simplicity, making it **unsuitable for production** environments. Use this configuration strictly for testing purposes.
