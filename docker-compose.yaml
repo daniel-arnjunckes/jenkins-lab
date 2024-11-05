@@ -1,0 +1,58 @@
+services:
+  docker-dind:
+    image: docker:dind
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+    ports:
+      - 2376:2375 # Using 2376 to not conflict with the actual docker engine
+    networks:
+      jenkins-net:
+        aliases:
+          - docker
+    
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: DOCKERFILE
+    # image: jenkins/jenkins:latest
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+      - jenkins-ssh-public-key:/var/jenkins_home/.ssh/public-key/
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - 8080:8080
+      - 50000:50000
+    networks:
+      jenkins-net:
+        aliases:
+          - docker
+
+  jenkins-docker-agent:
+    image: jenkins/ssh-agent:latest
+    volumes:
+      - jenkins-ssh-public-key:/home/jenkins/.ssh/
+    ports:
+      - 2200:22
+    networks:
+      jenkins-net:
+        aliases:
+          - docker
+    depends_on:
+      - jenkins
+networks:
+  jenkins-net:
+    driver: bridge
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
+  jenkins-ssh-public-key:

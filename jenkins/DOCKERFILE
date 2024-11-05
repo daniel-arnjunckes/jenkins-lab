@@ -1,0 +1,11 @@
+# Custom image to generate a SSH KEY during the build.
+FROM jenkins/jenkins:latest
+
+USER jenkins
+# Generating the ssh key pair
+RUN ssh-keygen -f ~/.ssh/jenkins_agent_ssh_key -P ""
+# Moving the pub key to a separeted dir so we can mount a volume in it
+RUN mkdir  ~/.ssh/public-key && \
+    cp ~/.ssh/jenkins_agent_ssh_key.pub ~/.ssh/public-key/authorized_keys && \
+    chmod 700 ~/.ssh/public-key && \
+    chmod 600 ~/.ssh/public-key/authorized_keys
