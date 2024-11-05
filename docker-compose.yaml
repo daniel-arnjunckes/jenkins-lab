@@ -3,12 +3,15 @@ services:
     image: docker:dind
     privileged: true
     environment:
+      # Insert a path/dir to activate TLS
       - DOCKER_TLS_CERTDIR=
     volumes:
       - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs/client
+      # Only used when TLS is activated on Docker DinD
+      # - jenkins-docker-certs:/certs/client
     ports:
-      - 2376:2375 # Using 2376 to not conflict with the actual docker engine
+      # Using 2376 to not conflict with the actual docker engine
+      - 2376:2375 
     networks:
       jenkins-net:
         aliases:
@@ -18,16 +21,17 @@ services:
     build:
       context: ./jenkins
       dockerfile: DOCKERFILE
-    # image: jenkins/jenkins:latest
     volumes:
       - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs/client
+      # Only used when TLS is activated on Docker DinD
+      # - jenkins-docker-certs:/certs/client
       - jenkins-ssh-public-key:/var/jenkins_home/.ssh/public-key/
     environment:
-      - DOCKER_TLS_CERTDIR=/certs
       - DOCKER_HOST=tcp://docker:2376
-      - DOCKER_CERT_PATH=/certs/client
-      - DOCKER_TLS_VERIFY=1
+      # Only used when TLS is activated on Docker DinD
+      # - DOCKER_TLS_CERTDIR=/certs
+      # - DOCKER_CERT_PATH=/certs/client
+      # - DOCKER_TLS_VERIFY=1
     ports:
       - 8080:8080
       - 50000:50000
@@ -54,5 +58,7 @@ networks:
 
 volumes:
   jenkins-data:
-  jenkins-docker-certs:
   jenkins-ssh-public-key:
+  # Only used when TLS is activated on Docker DinD
+  # jenkins-docker-certs:
+  
