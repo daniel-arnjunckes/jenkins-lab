@@ -38,5 +38,5 @@ Once the environment is up and running, it should resemble the following archite
 
 For detailed instructions on various tasks, refer to the following guides:
 - [Configuring a SSH Credential](./docs/configuring-ssh-credential.md)
-- [Registering a Jenkins Agent Using SSH](./docs/registering-ssh-agent.md)
+- [Registering a SSH Agent](./docs/registering-ssh-agent.md)
 - [Creating Dynamic Agents Using Docker Plugin](./docs/creating-dynamic-agents-docker-plugin.md)
