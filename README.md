@@ -17,3 +17,26 @@ Once the environment is up and running, it should resemble the following archite
 ![Architecture](./imgs/lab_architecture.png)
 
 > **Note**: This setup deactivates TLS in the DinD container for simplicity, making it **unsuitable for production** environments. Use this configuration strictly for testing purposes.
+
+## Getting Started
+
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/yourusername/jenkins-lab.git
+    cd jenkins-lab
+    ```
+
+2. **Run Docker Compose**
+    ```bash
+    docker-compose up -d
+    ```
+
+3. **Access Jenkins**
+    Open your browser and navigate to `http://localhost:8080`
+
+## How-To Guides
+
+For detailed instructions on various tasks, refer to the following guides:
+- [Configuring a SSH Credential](./docs/configuring-ssh-credential.md)
+- [Registering a Jenkins Agent Using SSH](./docs/registering-ssh-agent.md)
+- [Creating Dynamic Agents Using Docker Plugin](./docs/creating-dynamic-agents-docker-plugin.md)
